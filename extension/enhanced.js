@@ -16,8 +16,6 @@ if (enhanced_AccountInfo) {
 
 var enhanced_extId = 'ldeakaihfnkjmelifgmbmjlphdfncbfg'
 var enhanced_lang = enhancedTranslate(enhanced_local, true)
-embed(enhanced_loadUserInfo, false)
-
 
 // Load existing settings
 var enhanced_storedSettings = localStorage.getItem('enhanced_' + enhanced_AccountInfo[0] + '#' + enhanced_AccountInfo[1])
