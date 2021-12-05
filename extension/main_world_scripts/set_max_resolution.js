@@ -7,7 +7,7 @@
  *
  * This script has to be placed at the end of the page, since reads content from other scripts placed on the site.
  */
-function pollAndSetMaxResolution() {
+function pollAndSetResolution() {
     const enhanced_AccountInfo = _getAccountInfo()
 
     var x, y
@@ -70,4 +70,4 @@ function _getAccountInfo() {
 
 }
 
-pollAndSetMaxResolution()
+pollAndSetResolution()

@@ -3823,17 +3823,6 @@ function openStadia(url) {
     }
 }
 
-// Embed scripts to execute on the websites layer
-function embed(fn, active = true) {
-    const script = document.createElement('script')
-    if (active === true) {
-        script.text = `(${fn.toString()})();`
-    } else {
-        script.text = `${fn.toString()}`
-    }
-    (document.head || document.documentElement).appendChild(script)
-}
-
 // Insert elements
 function secureInsert(el, sel, opt = 0) {
     if (/^[a-z 0-9]+$/i.test(sel)) {
@@ -4076,45 +4065,4 @@ function isHome() {
 
 function isLibrary() {
     return document.location.href.indexOf('/library') != -1
-}
-
-// Debugging - Call via "debugEnhanced(); on Stadia
-function debugEnhanced(opt) {
-    if (opt == null) {
-        console.log("Please specify an option ('translation', 'profile', 'restorelists'). For example: debugEnhanced('translation');")
-        return
-    }
-
-    switch (opt) {
-        case 'translation':
-            // Translations
-            console.groupCollapsed('Stadia Enhanced: Translation Output')
-            var languages = ['fr', 'nl', 'sv', 'pt', 'ca', 'da', 'it', 'es', 'de', 'ru', 'hu', 'sk', 'eo']
-            for (var i = 0; i < languages.length; i++) {
-                debug_load = enhancedTranslate(languages[i], true)
-            }
-            console.groupEnd()
-            break
-        case 'profile':
-            var enhanced_activeUser = document.getElementsByClassName('DlMyQd NTLMMc')[0].textContent
-            console.table(JSON.parse(localStorage.getItem('enhanced_' + enhanced_activeUser)))
-            break
-        case 'restorelists':
-            var enhanced_activeUser = document.getElementsByClassName('DlMyQd NTLMMc')[0].textContent
-            enhanced_settings = JSON.parse(localStorage.getItem('enhanced_' + enhanced_activeUser))
-            if (localStorage.getItem('enhanced_gameFilter')) {
-                enhanced_settings.gameFilter = localStorage.getItem('enhanced_gameFilter')
-            }
-            if (localStorage.getItem('enhanced_favlist')) {
-                enhanced_settings.favoriteList = localStorage.getItem('enhanced_favlist')
-            }
-            if (localStorage.getItem('enhanced_wishlist')) {
-                enhanced_settings.wishlist = localStorage.getItem('enhanced_wishlist')
-            }
-            localStorage.setItem('enhanced_' + enhanced_activeUser, JSON.stringify(enhanced_settings))
-            location.reload()
-            break
-        default:
-            console.log(`Unknown option '${opt}'. Available options are: 'translation', 'profile' and 'restorelists'`)
-    }
 }
