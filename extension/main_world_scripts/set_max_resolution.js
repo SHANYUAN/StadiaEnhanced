@@ -67,7 +67,6 @@ function _getAccountInfo() {
             return info
         }
     }
-
 }
 
 pollAndSetResolution()
