@@ -38,7 +38,7 @@
     },
     "web_accessible_resources": [
         "main_world_scripts/collect_stream_info.js",
-        "main_world_scripts/set_max_resolution.js",
+        "main_world_scripts/set_resolution.js",
         "main_world_scripts/debug_enhanced.js",
 
         "media/included/hunters_logo.png",

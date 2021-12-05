@@ -6,7 +6,7 @@
  */
 
 inject('main_world_scripts/collect_stream_info.js')
-inject('main_world_scripts/set_max_resolution.js')
+inject('main_world_scripts/set_resolution.js')
 inject('main_world_scripts/debug_enhanced.js')
 
 function inject(filename) {
