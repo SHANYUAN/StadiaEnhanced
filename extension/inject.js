@@ -1,12 +1,18 @@
 /**
- * Injects scripts.
+ * Injects scripts to the "main world", so they can be accessed from the webpage.
  *
  * As described in https://stackoverflow.com/questions/9515704/use-a-content-script-to-access-the-page-context-variables-and-functions,
  * this is the only ManifestV3-compatible method at the moment. The js file must be exposed in web_accessible_resources.
  */
-var s = document.createElement('script');
-s.src = chrome.runtime.getURL('rtc_peer_connection_inject.js');
-s.onload = function() {
-    this.remove();
-};
-(document.head || document.documentElement).appendChild(s);
+
+inject('main_world_scripts/collect_stream_info.js')
+inject('main_world_scripts/set_max_resolution.js')
+
+function inject(filename) {
+    var s = document.createElement('script');
+    s.src = chrome.runtime.getURL(filename);
+    s.onload = function() {
+        this.remove();
+    };
+    (document.head || document.documentElement).appendChild(s);
+}

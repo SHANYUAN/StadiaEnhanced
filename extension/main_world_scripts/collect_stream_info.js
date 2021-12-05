@@ -156,6 +156,10 @@ class StreamInfoCollector {
     }
 }
 
+function collectStreamInfo() {
+
+}
+
 function _formatTime(seconds) {
     var hours = Math.floor(seconds / 3600)
     seconds -= hours * 3600

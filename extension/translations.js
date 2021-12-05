@@ -2,7 +2,7 @@
 
 // load translations, by merging default with specified language
 function enhancedTranslate(lang, log = false) {
-    console.log("Loading translation !!!")
+
     // Debug
     var enhanced_consoleEnhanced = 'background: linear-gradient(135deg, rgba(255,76,29,0.75) 0%, rgba(155,0,99,0.75) 100%); color: white; padding: 4px 8px;'
     var lang_load = window.performance.now()

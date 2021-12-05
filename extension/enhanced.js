@@ -1505,52 +1505,6 @@ enhanced_resolutionPopup.addEventListener('click', function () {
     enhanced_applySettings('resolution', enhanced_settings.resolution)
 })
 
-function enhanced_changeResolution() {
-    console.log("RESOLUTION: INIT")
-    var enhanced_AccountInfo = enhanced_loadUserInfo()
-    console.log("RESOLUTION: USERINFO: " + enhanced_AccountInfo)
-
-    var x, y
-    setInterval(function () {
-        console.log("RESOLUTION: INSIDE LOOP")
-        var enhanced_settings = JSON.parse(localStorage.getItem('enhanced_' + enhanced_AccountInfo[0] + '#' + enhanced_AccountInfo[1]))
-        switch (enhanced_settings.resolution) {
-            case 0:
-                x = enhanced_settings.desktopWidth
-                y = enhanced_settings.desktopHeight
-                break
-            case 1:
-                x = 2560
-                y = 1440
-                break
-            case 2:
-                x = 3840
-                y = 2160
-                break
-        }
-
-        Object.defineProperties(window.screen, {
-            "availWidth": {
-                value: x,
-                configurable: true
-            },
-            "width": {
-                value: x,
-                configurable: true
-            },
-            "availHeight": {
-                value: y,
-                configurable: true
-            },
-            "height": {
-                value: y,
-                configurable: true
-            }
-        })
-    }, 1000)
-}
-// embed(enhanced_changeResolution)
-
 // Stream Monitor Autostart
 var enhanced_monitorStarted = false
 var enhanced_monitorAutostart = document.createElement('div')
@@ -4111,6 +4065,7 @@ function enhanced_updateSettings(obj) {
     localStorage.setItem('enhanced_' + enhanced_settings.user, JSON.stringify(enhanced_settings))
 }
 
+// Get user settings
 function isInGame() {
     return document.location.href.indexOf('/player/') != -1
 }

@@ -25,22 +25,21 @@
         "run_at": "document_end",
         "matches": ["*://stadia.google.com/u/*", "*://stadia.google.com/home*", "*://stadia.google.com/store*", "*://stadia.google.com/player*", "*://stadia.google.com/explore*", "*://stadia.google.com/profile*", "*://stadia.google.com/settings*", "*://stadia.google.com/captures*", "*://stadia.google.com/library*"],
         "js": [
+            "inject.js",
             "translations.js",
             "monitor.js",
             "menu_monitor.js",
             "enhanced.js"
         ]
-    }, {
-        "run_at": "document_start",
-        "matches": ["*://stadia.google.com/u/*", "*://stadia.google.com/home*", "*://stadia.google.com/store*", "*://stadia.google.com/player*", "*://stadia.google.com/explore*", "*://stadia.google.com/profile*", "*://stadia.google.com/settings*", "*://stadia.google.com/captures*", "*://stadia.google.com/library*"],
-        "js": ["inject.js"]
     }],
     "background": {
         "scripts": ["background.js"],
         "persistent": false
     },
     "web_accessible_resources": [
-        "rtc_peer_connection_inject.js",
+        "main_world_scripts/collect_stream_info.js",
+        "main_world_scripts/set_max_resolution.js",
+
         "media/included/hunters_logo.png",
         "media/included/hunters_banner.png"
     ],
