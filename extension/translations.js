@@ -1,7 +1,10 @@
-// Translations
+/**
+ * Provide the enhancedTranslate function on a "main world" level so it can be used in the debug utility.
+ * This should be converted to a content script in the future.
+ */
 
 // load translations, by merging default with specified language
-function enhancedTranslate(lang, log = false) {
+function enhanced_loadTranslations(lang, log = false) {
 
     // Debug
     var enhanced_consoleEnhanced = 'background: linear-gradient(135deg, rgba(255,76,29,0.75) 0%, rgba(155,0,99,0.75) 100%); color: white; padding: 4px 8px;'
@@ -32,7 +35,7 @@ function enhancedTranslate(lang, log = false) {
 
     lang_load = window.performance.now() - lang_load
 
-    if (log) {
+    if (log) { // used in debug utility
         console.groupCollapsed('%cStadia Enhanced' + '%c ⚙️ - Loading translation "' + lang + '" - ' + Object.keys(translate_load).length + ' keys in ' + lang_load.toFixed(2) + 'ms, ' + lang_filled + ' key(s) defaulting to "en" and ' + Object.keys(lang_missing).length + ' key(s) missing.', enhanced_consoleEnhanced, '');
         console.table(translate_load)
         if (Object.keys(lang_missing).length != 0) {
@@ -40,6 +43,7 @@ function enhancedTranslate(lang, log = false) {
         }
         console.groupEnd()
     }
+
     return translation
 }
 

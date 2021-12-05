@@ -7,15 +7,17 @@
 
 const HELP_TEXT = `
 Welcome to the Stadia Enhanced debug utility!
+----------------------------------------------
 
 Please specify one of the following options:
-    'translation' (Displays all available translations)
-    'profile' (Prints user information and settings)
-    'restorelists' (???)
-    'resolution' (Prints your current and maximum browser resolution)
+    profile         (Prints user information and settings)
+    resolution      (Prints your current and maximum browser resolution)
+    restorelists    (Restores user's gameFilter, favlist and wishlist)
+    translation     (Prints all available translations)
                 
 For example, if you want to see all available translations use the following command: 
     debugEnhanced('translation');
+
 `;
 
 function debugEnhanced(opt) {
@@ -26,48 +28,29 @@ function debugEnhanced(opt) {
 
     switch (opt) {
 
-        case 'translation':
-            console.groupCollapsed('Stadia Enhanced: Translation Output')
-            var languages = ['fr', 'nl', 'sv', 'pt', 'ca', 'da', 'it', 'es', 'de', 'ru', 'hu', 'sk', 'eo']
-            for (var i = 0; i < languages.length; i++) {
-                debug_load = enhancedTranslate(languages[i], true)
-            }
-            console.groupEnd()
-            break
-
         case 'profile':
             _printProfile()
-            break
-
-        case 'restorelists':
-            const enhanced_activeUser = _getStadiaUsername()
-
-            enhanced_settings = JSON.parse(localStorage.getItem('enhanced_' + enhanced_activeUser))
-
-            if (localStorage.getItem('enhanced_gameFilter')) {
-                enhanced_settings.gameFilter = localStorage.getItem('enhanced_gameFilter')
-            }
-            if (localStorage.getItem('enhanced_favlist')) {
-                enhanced_settings.favoriteList = localStorage.getItem('enhanced_favlist')
-            }
-            if (localStorage.getItem('enhanced_wishlist')) {
-                enhanced_settings.wishlist = localStorage.getItem('enhanced_wishlist')
-            }
-            localStorage.setItem('enhanced_' + enhanced_activeUser, JSON.stringify(enhanced_settings))
-            location.reload()
             break
 
         case 'resolution':
             _printResolution()
             break
 
+        case 'restorelists':
+            _restoreLists();
+            break
+
+        case 'translation':
+            _printTranslations();
+            break
+
         default:
-            console.log(`Unknown option '${opt}'. Available options are: 'translation', 'profile' and 'restorelists'`)
+            console.log(`Unknown option '${opt}'. Run debugEnhanced(); to see supported options.`)
     }
 
     function _printProfile() {
         const username = _getStadiaUsername();
-        const settings = _getEnhancedSettings(username)
+        const settings = _getSettings(username)
         console.table(settings)
     }
 
@@ -84,11 +67,51 @@ function debugEnhanced(opt) {
         console.log(`Your current browser resolution is set to: ${dimensions.availWidth}x${dimensions.availHeight} (${description})`)
     }
 
+    function _restoreLists() {
+        const username = _getStadiaUsername()
+        const settings = _getSettings(username)
+
+        // overwrite user's game-filter
+        const gameFilter = localStorage.getItem('enhanced_gameFilter');
+        if (gameFilter) {
+            settings.gameFilter = gameFilter
+        }
+
+        // overwrite user's favlist
+        const favlist = localStorage.getItem('enhanced_favlist');
+        if (favlist) {
+            settings.favoriteList = favlist
+        }
+
+        // overwrite user's wishlist
+        const wishList = localStorage.getItem('enhanced_wishlist');
+        if (wishList) {
+            settings.wishlist = wishList
+        }
+
+        _updateSettings(username, settings)
+
+        location.reload()
+    }
+
+    function _printTranslations() {
+        console.groupCollapsed('Stadia Enhanced: Translation Output')
+        var languages = ['fr', 'nl', 'sv', 'pt', 'ca', 'da', 'it', 'es', 'de', 'ru', 'hu', 'sk', 'eo']
+        for (var i = 0; i < languages.length; i++) {
+            debug_load = enhanced_loadTranslations(languages[i], true)
+        }
+        console.groupEnd()
+    }
+
     function _getStadiaUsername() {
         return document.getElementsByClassName('DlMyQd NTLMMc')[0].textContent
     }
 
-    function _getEnhancedSettings(username) {
+    function _getSettings(username) {
         return JSON.parse(localStorage.getItem('enhanced_' + username))
+    }
+
+    function _updateSettings(username, settings) {
+        localStorage.setItem('enhanced_' + username, JSON.stringify(settings))
     }
 }

@@ -1,5 +1,6 @@
 /**
- * Injects scripts to the "main world", so they can be accessed from the webpage.
+ * Injects scripts to the "main world", so they can be accessed from the webpage. In addition, they are also available
+ * to all content scripts.
  *
  * As described in https://stackoverflow.com/questions/9515704/use-a-content-script-to-access-the-page-context-variables-and-functions,
  * this is the only ManifestV3-compatible method at the moment. The js file must be exposed in web_accessible_resources.
