@@ -42,6 +42,7 @@
             "translations/sk.js",
             "translations/sv.js",
 
+            "wishlist.js",
             "translations.js",
             "monitor.js",
             "menu_monitor.js",
@@ -76,6 +77,6 @@
         "media/included/hunters_logo.png",
         "media/included/hunters_banner.png"
     ],
-    "permissions": ["*://stadia.google.com/*"],
+    "permissions": ["*://stadia.google.com/*", "storage"],
     "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoURhfz19FyU5ZeKbi/+jNShvXObytvh7OQfsrZJrjHScWiejv1LnsVsTkmqlAdKYozBOTs6SqXeYU8MS23wmJSYnbfwBR/vBrbc0PqpFXjEqkmW4ZrOMFYajvC2P5odhyNqxG0M22InytfrCaez63jgviUNW6O09GL9i25ERxMBeDmU6xMk+kAKFQQLRgMy/FhdT+2vQuEs++Xa6x8k7Y91jJ2SRgPzbv4i3Rm3pCt28bnN2tE29g2/eBM7SnolFNNAF/63VFU5p4sFfJCNTP5xgv0QLOra8qgbQYXW0KGN1Sy8jzcUSrdRpfRSBpyLBYQWcp73zIYs56NfKKem5gwIDAQAB"
 }

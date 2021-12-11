@@ -2048,37 +2048,21 @@ enhanced_Metacritic.addEventListener('click', function () {
 enhanced_StoreContainer.append(enhanced_Metacritic)
 
 // Wishlisting
-var enhanced_wishlistContainer = document.createElement('li')
-enhanced_wishlistContainer.className = 'OfFb0b tj2D'
-enhanced_wishlistContainer.id = 'enhanced_wishlistContainer'
-enhanced_wishlistContainer.style.display = 'none'
-var enhanced_wishlistHeart = document.createElement('div')
-enhanced_wishlistContainer.appendChild(enhanced_wishlistHeart)
-enhanced_wishlistHeart.className = 'ROpnrd QAAyWd wJYinb'
-enhanced_wishlistHeart.id = 'enhanced_WishlistHeart'
-enhanced_wishlistHeart.innerHTML = ''
-enhanced_wishlistHeart.style.width = '2.5rem'
-enhanced_wishlistHeart.style.padding = '0'
-enhanced_wishlistHeart.style.cursor = 'pointer'
-enhanced_wishlistHeart.style.userSelect = 'none'
-enhanced_wishlistHeart.tabIndex = '0'
-enhanced_wishlistHeart.addEventListener('click', function () {
-    var enhanced_currentSKU = document.location.href.split('sku/')[1].split('?')[0]
+console.log("SEND MESSAGE")
+let request = {
+    action: "resolve-wishlist",
+    username: enhanced_AccountInfo[0] + "#" + enhanced_AccountInfo[1]
+};
+chrome.runtime.sendMessage(request, function(response) {
+    console.log("response: " + response)
+});
 
-    if (enhanced_settings.wishlist.includes(enhanced_currentSKU)) {
-        enhanced_settings.wishlist = enhanced_settings.wishlist.replace('(' + enhanced_currentSKU + ')', '')
-        enhanced_wishlistHeart.innerHTML = '<i class="material-icons-extended" aria-hidden="true">favorite_border</i>'
-        enhanced_wishlistHeart.style.color = ''
-    } else {
-        enhanced_settings.wishlist += '(' + enhanced_currentSKU + ')'
-        enhanced_wishlistHeart.innerHTML = '<i class="material-icons-extended" aria-hidden="true">favorite</i>'
-        enhanced_wishlistHeart.style.color = '#ff773d'
-    }
-    localStorage.setItem('enhanced_' + enhanced_settings.user, JSON.stringify(enhanced_settings))
-})
+var wishlist_details
+let wishlist = new Wishlist();
+var enhanced_wishlistContainer = wishlist.element
 if (document.getElementsByClassName('ZECEje')[0] !== undefined) {
     // Currently deactivated, due to store changes
-    // document.getElementsByClassName('ZECEje')[0].append(enhanced_wishlistContainer)
+    document.getElementsByClassName('ZECEje')[0].append(enhanced_wishlistContainer)
 }
 
 // Account Menu - Changes to the account menu behaviour
@@ -2493,6 +2477,17 @@ var enhanced_wrappers = []
 
 // Main Loop
 setInterval(function () {
+    // get wishlist
+
+    if (wishlist_details == null) {
+        chrome.storage.local.get(["enhanced_wishlist_details"], function (result) {
+            console.log("games: " + result.enhanced_wishlist_details)
+            wishlist_details = result.enhanced_wishlist_details
+
+            wishlist_details.forEach(g => console.log(g))
+        })
+    }
+
     // Location - Home & Library
     if (isHome() || isLibrary()) {
 
@@ -2870,26 +2865,16 @@ setInterval(function () {
         }
 
         // Wishlist Startup
-        if (enhanced_wishlistHeart.innerHTML == '') {
-            var enhanced_currentSKU = document.location.href.split('sku/')[1].split('?')[0]
-            if (enhanced_settings.wishlist.includes(enhanced_currentSKU)) {
-                enhanced_wishlistHeart.innerHTML = '<i class="material-icons-extended" aria-hidden="true">favorite</i>'
-                enhanced_wishlistHeart.style.color = '#ff773d'
-            } else {
-                enhanced_wishlistHeart.innerHTML = '<i class="material-icons-extended" aria-hidden="true">favorite_border</i>'
-                enhanced_wishlistHeart.style.color = ''
-            }
-            enhanced_wishlistContainer.style.display = 'inline-block'
-        }
+        console.log("SHOW IT")
+        wishlist.show()
 
         secureInsert(enhanced_StoreContainer, 'WjVJKd', 0)
     } else {
         // Reset extended game info
         enhanced_extendedDetails.innerHTML = ''
 
-        // Wishlist Startup
-        enhanced_wishlistContainer.style.display = 'none'
-        enhanced_wishlistHeart.innerHTML = ''
+        console.log("RESET!!!")
+        wishlist.hide()
     }
 
     // Location - Store List
